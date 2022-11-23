@@ -1,0 +1,25 @@
+﻿@model IQueryable<IdentityRole>
+
+@{ 
+    ViewBag.Title = "Roles";
+}
+
+<div class="alert alert-info my-5 text-center">List Of Roles</div>
+<a class="btn btn-sm btn-primary" asp-action="CreateRole">Create New Role</a>
+<div class="row">
+    @foreach(IdentityRole role in Model)
+    {
+        <div class="col-12 my-1">
+            <div  class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@role.Name</h5>
+                    <div class="text-white">
+                        <a class="btn btn-sm my-auto btn-secondary" asp-action="Edit" asp-route-id="@role.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-route="Delete" asp-route-id="@role.Id">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

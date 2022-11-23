@@ -1,0 +1,51 @@
+﻿@model EditRoleViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>Edit Role</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-5">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Roles" class="btn btn-dark">Cancel</a>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">List Users</h5>
+                    <hr />
+                    <p class="card-text">
+                        @if (Model.Users.Count == 0)
+                        {
+                            <span class=text-danger>List is empty</span> <hr />
+                        }
+                        else
+                        {
+                            @foreach (string userEmail in Model.Users)
+                            {
+                                <span class="display-6">@userEmail</span> <hr />
+                            }
+                        }
+                    <p />
+                    <div class="text-white">
+                        <a class="btn btn-sm my-auto btn-primary" asp-controller="Administration" asp-action="EditUsersRole" asp-route-idRole="@Model.Id">Add/Remove Users</a>
+                        <a class="btn btn-sm btn-dark" asp-action="Roles">Back to Roles</a>
+                    </div>
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </form>
+    </div>
+</div>
+

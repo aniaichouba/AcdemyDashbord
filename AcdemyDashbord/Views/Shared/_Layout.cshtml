@@ -1,0 +1,110 @@
+﻿
+@inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser> userManager
+
+
+
+<DOCTYPE html>
+    <html>
+    <head>
+        <title>@ViewBag.Title | Employees Management</title>
+
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+              crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="abslute"
+              asp-suppress-fallback-integrity="true">
+        <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+        <link rel="icon" type="image/x-icon" href="/Images/logo.png" asp-append-version="true" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    EMPLOYEE
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item ">
+                                <ul>
+                                    <li><a class="dropdown-item" asp-action="Roles" asp-controller="Administration">Roles</a></li>
+                                    <li><a class="dropdown-item" asp-action="Users" asp-controller="Account">Users</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav d-flex">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            string fullName = null;
+                            AppUser user = await userManager.FindByEmailAsync(User.Identity.Name);
+                            if (user != null)
+                            {
+                                fullName = (user.FirstName ?? string.Empty).ToUpper() + " " + (user.LastName ?? string.Empty).ToLower();
+                            }
+                            if (fullName == null || fullName.Trim() == "") fullName = User.Identity.Name;
+
+                            <li class="nav-item dropstart">
+                                <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @fullName
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        @using (Html.BeginForm("Edit", "Account", FormMethod.Get))
+                                        {
+                                            <input type="text" name="Id" value="@user.Id" class="form-control" hidden />
+                                            <input type="submit" value="Edit Account" class="dropdown-item">
+                                        }
+                                    </li>
+                                    <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
+                                </ul>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link btn-link" asp-action="Login" asp-controller="Account">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn-link" asp-action="Register" asp-controller="Account">Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            @RenderBody()
+        </div>
+
+
+        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+
+        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+        @RenderSection(name:"DTListUsers",required:false)
+    </body>
+</html>

@@ -1,0 +1,95 @@
+﻿@model AccountEditUserViewModel
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<h1>Edit User</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input asp-for="Id" class="form-control" disabled />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group my-2">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+
+            <div class="row">
+                <div class="col-md-6 col-12 mx-auto">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">User Roles</h5>
+                            <hr />
+                            <p class="card-text">
+                                @if (Model.Roles.Count == 0)
+                                {
+                                    <span class=text-danger>List is empty</span> <hr />
+                                }
+                                else
+                                {
+                                    <ol class="active">
+                                        @for (int i = 0; i < Model.Roles.Count; i++)
+                                        {
+                                            <li class="display-6">@Model.Roles[i]</li>
+                                        }
+                                    </ol>
+                                }
+                            <p />
+                            <div class="text-white">
+                                <a class="btn btn-sm btn-dark" asp-action="Roles" asp-controller="Administration">Manage Roles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-6 col-12 mx-auto">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">User Claims</h5>
+                            <hr />
+                            <p class="card-text">
+                                @if (Model.Claims.Count == 0)
+                                {
+                                    <span class=text-danger>List is empty</span> <hr />
+                                }
+                                else
+                                {
+                                    <ol class="active">
+                                        @for (int i = 0; i < Model.Claims.Count; i++)
+                                        {
+                                            <li class="display-6">@Model.Claims[i]</li>
+                                        }
+                                    </ol>
+                                }
+                            <p />
+                            <div class="text-white">
+                                <a class="btn btn-sm btn-dark" asp-action="Roles" asp-controller="Administration">Manage Claims</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

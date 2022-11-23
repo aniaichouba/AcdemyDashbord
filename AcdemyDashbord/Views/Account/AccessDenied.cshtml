@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Access Denied";
+}
+
+<div class="my-3">
+    <div class="card text-center">
+        <div class="card-header">
+            <span class="display-3 text-danger">
+                <strong>You don't have permission to access this resource.</strong>
+                <br />
+                Path : @ViewBag.ReturnUrl
+            </span>
+        </div>
+        <div class="card-body">
+            <img src="~/images/AccessDenied.png" asp-append-version="true" width=150 height=150 />
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-sm btn-dark" asp-action="Index" asp-controller="Employee">Go to home page</a>
+        </div>
+    </div>
+</div>

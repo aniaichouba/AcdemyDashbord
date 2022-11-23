@@ -1,0 +1,20 @@
+﻿@model StatusResult
+@{
+    ViewBag.Title = "Error";
+}
+
+
+<div class="page-wrap d-flex flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <span class="display-1 d-block my-5">ERROR @ViewBag.StatusCode</span>
+                <div class="mb-4 lead">
+                    <span class=text-danger>@Model.Message</span>
+                </div>
+                <hr />
+                <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-dark">Back to Home Page</a>
+            </div>
+        </div>
+    </div>
+</div>
